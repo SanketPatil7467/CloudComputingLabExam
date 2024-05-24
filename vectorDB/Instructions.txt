@@ -1,0 +1,57 @@
+Download and install docker
+Then go to desired directory
+run below command on windows 
+
+- Invoke-WebRequest -Uri "https://github.com/milvus-io/milvus/releases/download/v2.2.11/milvus-standalone-docker-compose.yml" -OutFile "docker-compose.yml"
+
+"Go to docker-compose.yml
+
+This file defines three services needed for Milvus:
+etcd: Volume assigned for data persisting.
+minio: Service for object storage.
+standalone: Service that actually runs Milvus."
+
+POWERSHELL COMMANDS
+Check Docker is running 
+ - Get-Process "Docker Desktop"
+start milvus 
+ - docker compose up
+
+To check the running services
+ - docker compose ps
+ - Also go to Docker UI
+
+Now, how to insall Attu
+- Attu is an efficient open-source management tool for milvus. It provide GUI allowing you to easily
+interact with your vector milvus database. You can visualize your cluster status, manage metadata, perform data queris and much more.
+
+open docker-compose.yml and add following to the service block.
+ attu:
+    container_name: attu
+    image: zilliz/attu:v2.2.6
+    environment:
+      MILVUS_URL: milvus-standalone:19530
+    ports:
+      - "8000:3000"
+    depends_on:
+      - "standalone"
+
+
+run this command:
+ - docker compose up -d 
+
+open browser and go to localhost:8000
+username: root
+password: Milvis 
+
+
+
+https://chat.openai.com/share/32a8cc92-279c-476e-be17-4af284a5c093
+
+Links in sequence:
+https://milvus.io/docs/manage_connection.md
+https://milvus.io/docs/create_collection.md
+https://milvus.io/docs/insert_data.md
+https://milvus.io/docs/build_index.md
+https://milvus.io/docs/query.md
+
